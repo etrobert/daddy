@@ -49,6 +49,8 @@ in
       mode = "raidz1";
       # The drives are 512-byte native; OVH's replacements may be 4K-sector.
       options.ashift = "12";
+      # Otherwise `zfs mount -a` races systemd's fstab mount and fails the boot.
+      rootFsOptions.mountpoint = "legacy";
       mountpoint = "/storage";
     };
   };
