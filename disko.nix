@@ -52,6 +52,26 @@ in
       # Otherwise `zfs mount -a` races systemd's fstab mount and fails the boot.
       rootFsOptions.mountpoint = "legacy";
       mountpoint = "/storage";
+
+      datasets = {
+        vm = {
+          type = "zfs_fs";
+          options = {
+            mountpoint = "none";
+            "com.sun.auto-snapshot" = "true";
+            "com.sun.auto-snapshot:daily" = "true";
+          };
+        };
+        "vm/softer" = {
+          type = "zfs_fs";
+          options = {
+            mountpoint = "/storage/vm_softer";
+            compression = "zstd";
+            quota = "3T";
+            reservation = "3T";
+          };
+        };
+      };
     };
   };
 }
