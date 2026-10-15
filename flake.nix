@@ -14,7 +14,7 @@
   };
 
   outputs =
-    { nixpkgs, disko, ... }:
+    { nixpkgs, disko, disko-zfs, ... }:
     {
       nixosConfigurations.daddy = nixpkgs.lib.nixosSystem {
         modules = [
