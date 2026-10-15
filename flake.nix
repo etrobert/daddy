@@ -16,6 +16,7 @@
           ./configuration.nix
           ./disko.nix
           ./users/soft.nix
+          ./users/softer.nix
         ];
       };
     };
