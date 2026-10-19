@@ -27,7 +27,6 @@
         modules = [
           disko.nixosModules.disko
           disko-zfs.nixosModules.default
-          etrobert-setup.nixosModules.caddy
           etrobert-setup.nixosModules.draw
           ./configuration.nix
           ./disko.nix
