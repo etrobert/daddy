@@ -3,7 +3,7 @@
     "agenix": {
       "inputs": {
         "nixpkgs": [
-          "setup",
+          "etrobert-setup",
           "nixpkgs"
         ]
       },
@@ -24,7 +24,7 @@
     "aichat": {
       "inputs": {
         "nixpkgs": [
-          "setup",
+          "etrobert-setup",
           "nixpkgs"
         ]
       },
@@ -63,7 +63,7 @@
     "countdown": {
       "inputs": {
         "nixpkgs": [
-          "setup",
+          "etrobert-setup",
           "nixpkgs"
         ]
       },
@@ -84,7 +84,7 @@
     "creatures": {
       "inputs": {
         "nixpkgs": [
-          "setup",
+          "etrobert-setup",
           "nixpkgs"
         ]
       },
@@ -149,7 +149,7 @@
     "disko_2": {
       "inputs": {
         "nixpkgs": [
-          "setup",
+          "etrobert-setup",
           "nixpkgs"
         ]
       },
@@ -170,7 +170,7 @@
     "dispatch": {
       "inputs": {
         "nixpkgs": [
-          "setup",
+          "etrobert-setup",
           "nixpkgs"
         ]
       },
@@ -185,6 +185,47 @@
       "original": {
         "owner": "etrobert",
         "repo": "dispatch",
+        "type": "github"
+      }
+    },
+    "etrobert-setup": {
+      "inputs": {
+        "agenix": "agenix",
+        "aichat": "aichat",
+        "countdown": "countdown",
+        "creatures": "creatures",
+        "disko": "disko_2",
+        "dispatch": "dispatch",
+        "flake-parts": "flake-parts_2",
+        "home-manager": "home-manager",
+        "neovim-nightly": "neovim-nightly",
+        "nix-claude-code": "nix-claude-code",
+        "nix-darwin": "nix-darwin",
+        "nix-flatpak": "nix-flatpak",
+        "nix-homebrew": "nix-homebrew",
+        "nix-index-database": "nix-index-database",
+        "nixpkgs": "nixpkgs_2",
+        "noctalia-official-plugins": "noctalia-official-plugins",
+        "node-exporter-dashboard": "node-exporter-dashboard",
+        "nutricalc": "nutricalc",
+        "pronto": "pronto",
+        "rack": "rack",
+        "rift-radar": "rift-radar",
+        "taskgraph": "taskgraph",
+        "tsnsrv": "tsnsrv"
+      },
+      "locked": {
+        "lastModified": 1792322212,
+        "narHash": "sha256-p6jdC4YhanzfrhrLlUKkCeAxYEOl9RuPhhHgDufVhYk=",
+        "owner": "etrobert",
+        "repo": "setup",
+        "rev": "7f73d1f23f4b3daf84edbca2ae011b1e80193630",
+        "type": "github"
+      },
+      "original": {
+        "owner": "etrobert",
+        "ref": "deploy",
+        "repo": "setup",
         "type": "github"
       }
     },
@@ -227,7 +268,7 @@
     "flake-parts_3": {
       "inputs": {
         "nixpkgs-lib": [
-          "setup",
+          "etrobert-setup",
           "neovim-nightly",
           "nixpkgs"
         ]
@@ -267,7 +308,7 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
-          "setup",
+          "etrobert-setup",
           "nixpkgs"
         ]
       },
@@ -289,7 +330,7 @@
       "inputs": {
         "flake-parts": "flake-parts_3",
         "neovim-src": "neovim-src",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs"
       },
       "locked": {
         "lastModified": 1792281765,
@@ -324,7 +365,7 @@
     "nix-claude-code": {
       "inputs": {
         "nixpkgs": [
-          "setup",
+          "etrobert-setup",
           "nixpkgs"
         ]
       },
@@ -345,7 +386,7 @@
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
-          "setup",
+          "etrobert-setup",
           "nixpkgs"
         ]
       },
@@ -401,7 +442,7 @@
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
-          "setup",
+          "etrobert-setup",
           "nixpkgs"
         ]
       },
@@ -421,16 +462,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1791734076,
-        "narHash": "sha256-i5qk1kLiit98rRbh1AXmWBNT9QXC/y4l5Wk/u5EdpDQ=",
-        "owner": "nixos",
+        "lastModified": 1792116957,
+        "narHash": "sha256-EjZqHKObBfIOeHZnMRVV87HB3pPq/WBkmRJWyFxmZu8=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "7fd4004d0511991fff3a0524856a9be09e28c5f0",
+        "rev": "f20cd90e28fe0403873f473b29e42662cd86e8c4",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -482,27 +523,27 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1792116957,
-        "narHash": "sha256-EjZqHKObBfIOeHZnMRVV87HB3pPq/WBkmRJWyFxmZu8=",
-        "owner": "NixOS",
+        "lastModified": 1792094642,
+        "narHash": "sha256-zp8ToDMnqZcu4o4IH9pdwXFXGp7yLm/M0dEnNWnyd7I=",
+        "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "f20cd90e28fe0403873f473b29e42662cd86e8c4",
+        "rev": "fe13242281a67641c0102cdb1087f0ebe586c7df",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
+        "owner": "nixos",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1792094642,
-        "narHash": "sha256-zp8ToDMnqZcu4o4IH9pdwXFXGp7yLm/M0dEnNWnyd7I=",
+        "lastModified": 1791734076,
+        "narHash": "sha256-i5qk1kLiit98rRbh1AXmWBNT9QXC/y4l5Wk/u5EdpDQ=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "fe13242281a67641c0102cdb1087f0ebe586c7df",
+        "rev": "7fd4004d0511991fff3a0524856a9be09e28c5f0",
         "type": "github"
       },
       "original": {
@@ -543,7 +584,7 @@
     "nutricalc": {
       "inputs": {
         "nixpkgs": [
-          "setup",
+          "etrobert-setup",
           "nixpkgs"
         ]
       },
@@ -564,7 +605,7 @@
     "pronto": {
       "inputs": {
         "nixpkgs": [
-          "setup",
+          "etrobert-setup",
           "nixpkgs"
         ]
       },
@@ -585,7 +626,7 @@
     "rack": {
       "inputs": {
         "nixpkgs": [
-          "setup",
+          "etrobert-setup",
           "nixpkgs"
         ]
       },
@@ -606,7 +647,7 @@
     "rift-radar": {
       "inputs": {
         "nixpkgs": [
-          "setup",
+          "etrobert-setup",
           "nixpkgs"
         ]
       },
@@ -628,55 +669,14 @@
       "inputs": {
         "disko": "disko",
         "disko-zfs": "disko-zfs",
-        "nixpkgs": "nixpkgs",
-        "setup": "setup"
-      }
-    },
-    "setup": {
-      "inputs": {
-        "agenix": "agenix",
-        "aichat": "aichat",
-        "countdown": "countdown",
-        "creatures": "creatures",
-        "disko": "disko_2",
-        "dispatch": "dispatch",
-        "flake-parts": "flake-parts_2",
-        "home-manager": "home-manager",
-        "neovim-nightly": "neovim-nightly",
-        "nix-claude-code": "nix-claude-code",
-        "nix-darwin": "nix-darwin",
-        "nix-flatpak": "nix-flatpak",
-        "nix-homebrew": "nix-homebrew",
-        "nix-index-database": "nix-index-database",
-        "nixpkgs": "nixpkgs_3",
-        "noctalia-official-plugins": "noctalia-official-plugins",
-        "node-exporter-dashboard": "node-exporter-dashboard",
-        "nutricalc": "nutricalc",
-        "pronto": "pronto",
-        "rack": "rack",
-        "rift-radar": "rift-radar",
-        "taskgraph": "taskgraph",
-        "tsnsrv": "tsnsrv"
-      },
-      "locked": {
-        "lastModified": 1792322212,
-        "narHash": "sha256-p6jdC4YhanzfrhrLlUKkCeAxYEOl9RuPhhHgDufVhYk=",
-        "owner": "etrobert",
-        "repo": "setup",
-        "rev": "7f73d1f23f4b3daf84edbca2ae011b1e80193630",
-        "type": "github"
-      },
-      "original": {
-        "owner": "etrobert",
-        "ref": "deploy",
-        "repo": "setup",
-        "type": "github"
+        "etrobert-setup": "etrobert-setup",
+        "nixpkgs": "nixpkgs_3"
       }
     },
     "taskgraph": {
       "inputs": {
         "nixpkgs": [
-          "setup",
+          "etrobert-setup",
           "nixpkgs"
         ]
       },
@@ -698,7 +698,7 @@
       "inputs": {
         "flake-parts": "flake-parts_4",
         "nixpkgs": [
-          "setup",
+          "etrobert-setup",
           "nixpkgs"
         ]
       },
