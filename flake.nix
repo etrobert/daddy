@@ -13,7 +13,12 @@
   };
 
   outputs =
-    { nixpkgs, disko, disko-zfs, ... }:
+    {
+      nixpkgs,
+      disko,
+      disko-zfs,
+      ...
+    }:
     {
       nixosConfigurations.daddy = nixpkgs.lib.nixosSystem {
         modules = [
@@ -21,6 +26,7 @@
           disko-zfs.nixosModules.default
           ./configuration.nix
           ./disko.nix
+          ./draw.nix
           ./users/soft.nix
           ./users/softer.nix
         ];
