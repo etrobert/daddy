@@ -10,15 +10,25 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.disko.follows = "disko";
     };
+    # deploy: setup's CI advances it only once every host builds
+    setup.url = "github:etrobert/setup/deploy";
   };
 
   outputs =
-    { nixpkgs, disko, disko-zfs, ... }:
+    {
+      nixpkgs,
+      disko,
+      disko-zfs,
+      setup,
+      ...
+    }:
     {
       nixosConfigurations.daddy = nixpkgs.lib.nixosSystem {
         modules = [
           disko.nixosModules.disko
           disko-zfs.nixosModules.default
+          setup.nixosModules.caddy
+          setup.nixosModules.draw
           ./configuration.nix
           ./disko.nix
           ./users/soft.nix
