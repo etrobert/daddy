@@ -17,6 +17,11 @@
     };
   };
 
+  services.caddy = {
+    enable = true;
+    openFirewall = true;
+  };
+
   users.mutableUsers = false;
   security.sudo.wheelNeedsPassword = false;
 
