@@ -32,6 +32,7 @@
           ./disko.nix
           ./users/soft.nix
           ./users/softer.nix
+          ./users/paal.nix
         ];
       };
     };
