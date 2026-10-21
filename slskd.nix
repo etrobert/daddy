@@ -19,8 +19,6 @@ in
         cache.retention = 60;
       };
 
-      retention.files.complete = 72 * 60;
-
       # Only Caddy on loopback should reach it.
       web.ip_address = "127.0.0.1";
     };
