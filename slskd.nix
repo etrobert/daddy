@@ -1,6 +1,8 @@
 { config, lib, ... }:
 let
   cfg = config.services.slskd;
+  # slskd's default when settings.directories.downloads is unset.
+  downloads = "/var/lib/slskd/downloads";
 in
 {
   services.slskd = {
@@ -10,15 +12,9 @@ in
     openFirewall = true;
 
     settings = {
-      # Siblings on one filesystem: completion is a rename, not a copy.
-      directories = {
-        downloads = "/storage/slskd/downloads";
-        incomplete = "/storage/slskd/incomplete";
-      };
-
       # Share back what we fetched.
       shares = {
-        directories = [ cfg.settings.directories.downloads ];
+        directories = [ downloads ];
         # Without it the share never picks up new downloads.
         cache.retention = 60;
       };
@@ -34,27 +30,6 @@ in
     reverse_proxy 127.0.0.1:${toString cfg.settings.web.port}
   '';
 
-  systemd = {
-    services.slskd = {
-      # The module makes shares read-only, and the share is the downloads directory.
-      serviceConfig.ReadOnlyPaths = lib.mkForce [ ];
-
-      # Without the mount, downloads would fill the root filesystem.
-      unitConfig.RequiresMountsFor = [ "/storage" ];
-    };
-
-    # ReadWritePaths= needs them to exist; the module only creates its StateDirectory.
-    tmpfiles.settings.slskd =
-      lib.genAttrs
-        [
-          "/storage/slskd"
-          cfg.settings.directories.downloads
-          cfg.settings.directories.incomplete
-        ]
-        (_: {
-          d = {
-            inherit (cfg) user group;
-          };
-        });
-  };
+  # The module makes shares read-only, and the share is the downloads directory.
+  systemd.services.slskd.serviceConfig.ReadOnlyPaths = lib.mkForce [ ];
 }
