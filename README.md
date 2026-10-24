@@ -14,11 +14,12 @@ push that does not build is skipped and the box keeps its current system.
 ## Shared files
 
 `/storage/shared` is writable by everyone in the `shared` group, which every
-user in `users/` joins. New files stay group-writable.
+user in `users/` joins. New files stay group-writable. Each service that
+writes there gets its own directory, `/storage/shared/<service>`.
 
 ## Transmission
 
-Downloads go to `/storage/shared/torrents`. The web UI is only reachable by
+Downloads go to `/storage/shared/transmission`. The web UI is only reachable by
 the `shared` group, through an SSH tunnel:
 
 ```sh

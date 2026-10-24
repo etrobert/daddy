@@ -3,7 +3,7 @@
 #   ssh -NL 9091:/run/transmission/rpc.sock <you>@51.91.29.38
 # then open http://localhost:9091.
 let
-  dir = "/storage/shared/torrents";
+  dir = "/storage/shared/transmission";
 in
 {
   services.transmission = {
