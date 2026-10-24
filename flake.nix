@@ -30,9 +30,6 @@
           etrobert-setup.nixosModules.draw
           ./configuration.nix
           ./disko.nix
-          ./shared.nix
-          ./transmission.nix
-          ./tailscale.nix
           ./users/soft.nix
           ./users/softer.nix
           ./users/paal.nix

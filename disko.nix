@@ -55,18 +55,6 @@ in
       mountpoint = "/storage";
 
       datasets = {
-        shared = {
-          type = "zfs_fs";
-          # legacy puts it in fstab, so systemd mounts it after /storage.
-          mountpoint = "/storage/shared";
-          options = {
-            mountpoint = "legacy";
-            compression = "zstd";
-            acltype = "posixacl";
-            xattr = "sa";
-            "com.sun.auto-snapshot" = "true";
-          };
-        };
         vm = {
           type = "zfs_fs";
           options = {
