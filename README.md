@@ -27,3 +27,8 @@ ssh -NL 9091:/run/transmission/rpc.sock <you>@51.91.29.38
 ```
 
 Then open <http://localhost:9091>.
+
+## Tailscale
+
+After the first deploy, someone runs `sudo tailscale up` on the box and opens
+the login link it prints to add daddy to the tailnet.
