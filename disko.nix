@@ -65,8 +65,10 @@ in
         };
         "vm/softer" = {
           type = "zfs_fs";
+          mountpoint = "/storage/vm_softer";
           options = {
-            mountpoint = "/storage/vm_softer";
+            # Otherwise `zfs create` and `zfs mount -a` mount it before /storage, which then hides it.
+            mountpoint = "legacy";
             compression = "zstd";
             quota = "3T";
             reservation = "3T";
