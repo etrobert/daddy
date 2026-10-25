@@ -9,7 +9,6 @@ let
   };
 in
 {
-  disko.zfs.enable = true;
   disko.devices = {
     disk = {
       nvme = {
