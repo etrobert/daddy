@@ -9,6 +9,9 @@
 
   networking.hostName = "daddy";
 
+  # Headless: a failed mount must not stop sshd and the network
+  systemd.enableEmergencyMode = false;
+
   services.openssh = {
     enable = true;
     settings = {
