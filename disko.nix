@@ -59,8 +59,8 @@ in
           type = "zfs_fs";
           options = {
             mountpoint = "none";
-            "com.sun.auto-snapshot" = "true";
-            "com.sun.auto-snapshot:daily" = "true";
+            "com.sun:auto-snapshot" = "true";
+            "com.sun:auto-snapshot:daily" = "true";
           };
         };
         "vm/softer" = {
