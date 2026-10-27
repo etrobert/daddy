@@ -74,6 +74,12 @@ in
             reservation = "3T";
           };
         };
+        music = {
+          type = "zfs_fs";
+          mountpoint = "/storage/music";
+          # Otherwise `zfs create` and `zfs mount -a` mount it before /storage, which then hides it.
+          options.mountpoint = "legacy";
+        };
       };
     };
   };

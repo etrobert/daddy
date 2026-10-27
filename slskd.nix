@@ -1,21 +1,15 @@
-{ config, lib, ... }:
-let
-  cfg = config.services.slskd;
-  # slskd's default when settings.directories.downloads is unset.
-  downloads = "/var/lib/slskd/downloads";
-in
+{ config, ... }:
 {
   services.slskd = {
     enable = true;
-    # Placed by hand: SLSKD_SLSK_USERNAME, SLSKD_SLSK_PASSWORD, SLSKD_USERNAME, SLSKD_PASSWORD, SLSKD_API_KEY.
+    # Placed by hand: SLSKD_SLSK_USERNAME, SLSKD_SLSK_PASSWORD, SLSKD_USERNAME, SLSKD_PASSWORD.
     environmentFile = "/etc/slskd.env";
     openFirewall = true;
 
     settings = {
-      # Share back what we fetched.
       shares = {
-        directories = [ downloads ];
-        # Without it the share never picks up new downloads.
+        directories = [ "/storage/music" ];
+        # Without it the share never picks up new files.
         cache.retention = 60;
       };
 
@@ -24,10 +18,7 @@ in
     };
   };
 
-  services.caddy.virtualHosts."soulseek.etiennerobert.com".extraConfig = ''
-    reverse_proxy 127.0.0.1:${toString cfg.settings.web.port}
+  services.caddy.virtualHosts."soulseek.etiennerobert.com".extraConfig = /* caddy */ ''
+    reverse_proxy 127.0.0.1:${toString config.services.slskd.settings.web.port}
   '';
-
-  # The module makes shares read-only, and the share is the downloads directory.
-  systemd.services.slskd.serviceConfig.ReadOnlyPaths = lib.mkForce [ ];
 }
