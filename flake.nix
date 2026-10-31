@@ -30,6 +30,7 @@
           etrobert-setup.nixosModules.draw
           ./configuration.nix
           ./disko.nix
+          ./navidrome.nix
           ./slskd.nix
           ./users/soft.nix
           ./users/softer.nix
