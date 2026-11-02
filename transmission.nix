@@ -7,11 +7,7 @@ in
     openPeerPorts = true;
     # Readable by everyone, so downloads can be pulled over SSH as a normal user.
     downloadDirPermissions = "755";
-    settings = {
-      download-dir = dir;
-      # Etienne's tower reaches the web UI under this tailnet name.
-      rpc-host-whitelist = "torrents";
-    };
+    settings.download-dir = dir;
   };
 
   # Without the mount, downloads would fill the root filesystem.
