@@ -88,8 +88,6 @@ in
             mountpoint = "legacy";
             # Finished files are large and read sequentially.
             recordsize = "1M";
-            # A stuck or runaway download must not fill the pool.
-            quota = "1T";
           };
         };
       };
