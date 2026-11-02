@@ -83,12 +83,7 @@ in
         downloads = {
           type = "zfs_fs";
           mountpoint = "/storage/downloads";
-          options = {
-            # Otherwise `zfs create` and `zfs mount -a` mount it before /storage, which then hides it.
-            mountpoint = "legacy";
-            # Finished files are large and read sequentially.
-            recordsize = "1M";
-          };
+          options.mountpoint = "legacy";
         };
       };
     };
