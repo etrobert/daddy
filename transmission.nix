@@ -10,6 +10,9 @@ in
     settings.download-dir = dir;
   };
 
+  # nixpkgs declares transmission-setup without anything that starts it (since NixOS/nixpkgs@314c912811).
+  systemd.services.transmission-setup.requiredBy = [ "transmission.service" ];
+
   # Without the mount, downloads would fill the root filesystem.
   systemd.services.transmission-setup.unitConfig.RequiresMountsFor = [ dir ];
   systemd.services.transmission.unitConfig.RequiresMountsFor = [ dir ];
