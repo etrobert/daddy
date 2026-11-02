@@ -38,6 +38,12 @@
     flake = "github:etrobert/daddy#daddy";
     # --upgrade only updates channels; nixos-rebuild warns on every run.
     upgrade = false;
+    # Track setup's deploy without bumping the lock for each change.
+    flags = [
+      "--override-input"
+      "etrobert-setup"
+      "github:etrobert/setup/deploy"
+    ];
     dates = "*:0/5";
     allowReboot = true;
   };
