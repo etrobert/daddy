@@ -38,6 +38,7 @@
           ./disko.nix
           ./navidrome.nix
           ./slskd.nix
+          ./transmission.nix
           ./users/soft.nix
           ./users/softer.nix
           ./users/paal.nix

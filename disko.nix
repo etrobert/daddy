@@ -80,6 +80,20 @@ in
           # Otherwise `zfs create` and `zfs mount -a` mount it before /storage, which then hides it.
           options.mountpoint = "legacy";
         };
+        # Re-downloadable, so never snapshotted: a snapshot would pin every finished torrent.
+        downloads = {
+          type = "zfs_fs";
+          mountpoint = "/storage/downloads";
+          options = {
+            # Otherwise `zfs create` and `zfs mount -a` mount it before /storage, which then hides it.
+            mountpoint = "legacy";
+            "com.sun:auto-snapshot" = "false";
+            # Finished files are large and read sequentially.
+            recordsize = "1M";
+            # A stuck or runaway download must not fill the pool.
+            quota = "1T";
+          };
+        };
       };
     };
   };
