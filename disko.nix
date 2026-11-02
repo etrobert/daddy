@@ -80,6 +80,11 @@ in
           # Otherwise `zfs create` and `zfs mount -a` mount it before /storage, which then hides it.
           options.mountpoint = "legacy";
         };
+        downloads = {
+          type = "zfs_fs";
+          mountpoint = "/storage/downloads";
+          options.mountpoint = "legacy";
+        };
       };
     };
   };
