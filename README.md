@@ -13,8 +13,8 @@ push that does not build is skipped and the box keeps its current system.
 
 ## Transmission
 
-Downloads land in `/storage/downloads/transmission`. Open the web UI through an
-SSH tunnel, then browse to <http://localhost:9091>:
+Downloads land in `/storage/downloads`. Open the web UI through an SSH tunnel,
+then browse to <http://localhost:9091>:
 
 ```sh
 ssh -NL 9091:127.0.0.1:9091 <you>@51.91.29.38

@@ -1,5 +1,5 @@
 let
-  dir = "/storage/downloads/transmission";
+  dir = "/storage/downloads";
 in
 {
   services.transmission = {
