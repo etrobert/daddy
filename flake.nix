@@ -27,7 +27,13 @@
         modules = [
           disko.nixosModules.disko
           disko-zfs.nixosModules.default
+          etrobert-setup.inputs.agenix.nixosModules.default
           etrobert-setup.nixosModules.draw
+          etrobert-setup.nixosModules.countdown
+          etrobert-setup.nixosModules.nutricalc
+          etrobert-setup.nixosModules.creatures
+          etrobert-setup.nixosModules.rift-radar
+          etrobert-setup.nixosModules.umami
           ./configuration.nix
           ./disko.nix
           ./navidrome.nix
