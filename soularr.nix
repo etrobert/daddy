@@ -11,6 +11,7 @@ let
       format = "wheel";
       src = ps.fetchPypi {
         inherit pname version format;
+        python = "py3";
         hash = "sha256-3gPCGgtfK2MW+NvycMaFkIW/VS6B7WAkqxkvUdRWpMA=";
       };
       dependencies = [ ps.requests ];
