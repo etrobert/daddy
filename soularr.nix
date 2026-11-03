@@ -9,9 +9,8 @@ let
       pname = "slskd_api";
       version = "0.1.5";
       format = "wheel";
-      src = ps.fetchPypi {
-        inherit pname version format;
-        python = "py3";
+      src = pkgs.fetchurl {
+        url = "https://files.pythonhosted.org/packages/py3/s/slskd_api/slskd_api-${version}-py3-none-any.whl";
         hash = "sha256-3gPCGgtfK2MW+NvycMaFkIW/VS6B7WAkqxkvUdRWpMA=";
       };
       dependencies = [ ps.requests ];
