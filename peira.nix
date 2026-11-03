@@ -1,5 +1,3 @@
-# Join the tailnet once after deploy with
-# `sudo nixos-container root-login peira` then `tailscale up`.
 {
   containers.peira = {
     autoStart = true;
