@@ -26,3 +26,11 @@ ssh -NL 9091:127.0.0.1:9091 <you>@51.91.29.38
 
 After the first deploy, someone runs `sudo tailscale up` on the box and opens
 the login link it prints to add daddy to the tailnet.
+
+## Soularr
+
+Runs every 5 minutes once `/etc/soularr.ini` exists, placed by hand with mode
+600. Base it on [the example](https://github.com/mrusse/soularr/blob/v1.2.3/config.ini).
+Under `[Slskd]`, use `http://127.0.0.1:5030` and `/var/lib/slskd/downloads`, with
+the API key set as `SLSKD_API_KEY` in `/etc/slskd.env`. Under `[Lidarr]`, use
+Lidarr's tailnet IP, as daddy does not use Tailscale DNS.
