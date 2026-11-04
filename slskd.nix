@@ -2,8 +2,7 @@
 {
   services.slskd = {
     enable = true;
-    # Placed by hand: SLSKD_SLSK_USERNAME, SLSKD_SLSK_PASSWORD, SLSKD_USERNAME, SLSKD_PASSWORD.
-    environmentFile = "/etc/slskd.env";
+    environmentFile = config.sops.templates."slskd.env".path;
     openFirewall = true;
 
     settings = {
@@ -15,6 +14,24 @@
 
       # Only Caddy on loopback should reach it.
       web.ip_address = "127.0.0.1";
+    };
+  };
+
+  sops = {
+    secrets = {
+      "slskd/soulseek-password" = { };
+      "slskd/web-password" = { };
+      "slskd/api-key" = { };
+    };
+    templates."slskd.env" = {
+      content = ''
+        SLSKD_SLSK_USERNAME=soft
+        SLSKD_SLSK_PASSWORD=${config.sops.placeholder."slskd/soulseek-password"}
+        SLSKD_USERNAME=soulseek
+        SLSKD_PASSWORD=${config.sops.placeholder."slskd/web-password"}
+        SLSKD_API_KEY=${config.sops.placeholder."slskd/api-key"}
+      '';
+      restartUnits = [ "slskd.service" ];
     };
   };
 

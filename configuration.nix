@@ -28,6 +28,8 @@
 
   environment.systemPackages = [ pkgs.neovim ];
 
+  sops.defaultSopsFile = ./secrets.yaml;
+
   users.mutableUsers = false;
   security.sudo.wheelNeedsPassword = false;
 
