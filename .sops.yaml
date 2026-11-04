@@ -1,8 +1,11 @@
+keys:
+  - &soft-tower "ssh-ed25519
+    AAAAC3NzaC1lZDI1NTE5AAAAILe8/rx4MPrvwQBU1cy5qkhBgnRALS6Jzc9I20EcBnAx
+    soft@tower"
+  # ssh-to-age of ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINMqSwM9N7jU+9RaloJkr44KwfYD8trGd4bHBQFTxKWg root@daddy, as sops-nix decrypts with the converted key.
+  - &daddy age14zlm0wxn5ewvshmh6325un2zxetvxxx6ssgrjvqjwg4gq49wks8s508jzn
 creation_rules:
   - key_groups:
       - age:
-          - "ssh-ed25519
-            AAAAC3NzaC1lZDI1NTE5AAAAILe8/rx4MPrvwQBU1cy5qkhBgnRALS6Jzc9I20EcBnAx
-            soft@tower"
-          # daddy: sops-nix decrypts with its host key converted by ssh-to-age, so it can't use the ssh-ed25519 form.
-          - age14zlm0wxn5ewvshmh6325un2zxetvxxx6ssgrjvqjwg4gq49wks8s508jzn
+          - *soft-tower
+          - *daddy
