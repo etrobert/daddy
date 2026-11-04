@@ -37,6 +37,7 @@
           ./configuration.nix
           ./disko.nix
           ./navidrome.nix
+          ./peira.nix
           ./slskd.nix
           ./soularr.nix
           ./tailscale.nix
