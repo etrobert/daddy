@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   nixpkgs.hostPlatform = "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = true;
@@ -24,6 +25,8 @@
     enable = true;
     openFirewall = true;
   };
+
+  environment.systemPackages = [ pkgs.neovim ];
 
   users.mutableUsers = false;
   security.sudo.wheelNeedsPassword = false;
