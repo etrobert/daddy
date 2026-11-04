@@ -28,6 +28,7 @@
           disko.nixosModules.disko
           disko-zfs.nixosModules.default
           etrobert-setup.inputs.agenix.nixosModules.default
+          etrobert-setup.nixosModules.ports
           etrobert-setup.nixosModules.draw
           etrobert-setup.nixosModules.countdown
           etrobert-setup.nixosModules.nutricalc
