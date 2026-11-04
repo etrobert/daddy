@@ -7,7 +7,10 @@
     localAddress = "10.233.1.2";
     enableTun = true;
     config = {
+      imports = [ ./users/soft.nix ];
       services.tailscale.enable = true;
+      services.openssh.enable = true;
+      security.sudo.wheelNeedsPassword = false;
       system.stateVersion = "26.11";
     };
   };
