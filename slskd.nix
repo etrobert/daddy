@@ -27,7 +27,7 @@
       content = ''
         SLSKD_SLSK_USERNAME=soft
         SLSKD_SLSK_PASSWORD=${config.sops.placeholder."slskd/soulseek-password"}
-        SLSKD_USERNAME=paal
+        SLSKD_USERNAME=soulseek
         SLSKD_PASSWORD=${config.sops.placeholder."slskd/web-password"}
         SLSKD_API_KEY=${config.sops.placeholder."slskd/api-key"}
       '';
