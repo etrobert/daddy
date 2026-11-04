@@ -24,6 +24,7 @@
     }:
     {
       nixosConfigurations.daddy = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit etrobert-setup; };
         modules = [
           disko.nixosModules.disko
           disko-zfs.nixosModules.default
