@@ -10,6 +10,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.disko.follows = "disko";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # deploy: setup's CI advances it only once every host builds
     etrobert-setup.url = "github:etrobert/setup/deploy";
   };
@@ -19,6 +23,7 @@
       nixpkgs,
       disko,
       disko-zfs,
+      sops-nix,
       etrobert-setup,
       ...
     }:
@@ -27,6 +32,7 @@
         modules = [
           disko.nixosModules.disko
           disko-zfs.nixosModules.default
+          sops-nix.nixosModules.sops
           etrobert-setup.inputs.agenix.nixosModules.default
           etrobert-setup.nixosModules.ports
           etrobert-setup.nixosModules.draw
