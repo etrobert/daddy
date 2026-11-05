@@ -4,12 +4,17 @@
   name,
   subnet,
   user,
+  # Host paths to share, as in containers.<name>.bindMounts.
+  bindMounts ? { },
 }:
-{ config, ... }:
+{ config, lib, ... }:
 let
   hostAddress = "10.233.${toString subnet}.1";
 in
 {
+  # Otherwise it would bind the empty directories beneath unmounted datasets.
+  systemd.services."container@${name}".unitConfig.RequiresMountsFor = lib.attrNames bindMounts;
+
   containers.${name} = {
     autoStart = true;
     # Own network stack, so its tailscaled doesn't clash with the host's.
@@ -17,6 +22,7 @@ in
     inherit hostAddress;
     localAddress = "10.233.${toString subnet}.2";
     enableTun = true;
+    inherit bindMounts;
 
     config = {
       imports = [
