@@ -1,3 +1,4 @@
+{ config, ... }:
 {
   containers.paal = {
     autoStart = true;
@@ -8,7 +9,13 @@
     enableTun = true;
 
     config = {
-      imports = [ ./users/paal.nix ];
+      imports = [
+        ./users/paal.nix
+        (import ./transmission-proxy.nix {
+          inherit (config.containers.paal) hostAddress;
+          port = config.services.transmission.settings.rpc-port;
+        })
+      ];
 
       # Join the tailnet once with `sudo tailscale up`; the login persists in /var/lib/tailscale.
       services.tailscale = {
