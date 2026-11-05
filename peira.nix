@@ -28,10 +28,6 @@ in
     "/storage/downloads"
   ];
 
-  networking.firewall.interfaces."ve-peira".allowedTCPPorts = [
-    config.services.transmission.settings.rpc-port
-  ];
-
   networking.nat = {
     enable = true;
     internalInterfaces = [ "ve-+" ];
