@@ -54,13 +54,17 @@
               "/storage/downloads" = { };
               "/var/lib/slskd/downloads" = { };
             };
-            # A device on Paal's FRITZ!Box, with the address it handed out.
+            # Paal's FRITZ!Box connects here with "Link networks": his home has
+            # no public IPv4 address, and the host has no IPv6.
             wireguard = {
-              address = "192.168.10.203/32";
-              endpoint = "9qo5i95uzvrcwy37.myfritz.net:57867";
-              publicKey = "mqotR4eXHsRQIWu/4Ue2nkC2ASYx0fRhlZHkqno4/AA=";
-              # Only his home network, not everything as the FRITZ!Box suggests.
-              allowedIPs = [ "192.168.10.0/24" ];
+              address = "10.234.2.2/24";
+              port = 51822;
+              publicKey = "/uC8P/QCWCDhd2nJa+v8DzjB8JbP9tjhkrIFfrewszg=";
+              # The FRITZ!Box's tunnel address, and his home network behind it.
+              allowedIPs = [
+                "10.234.2.1/32"
+                "192.168.10.0/24"
+              ];
             };
           })
           ./peira.nix

@@ -8,9 +8,10 @@
   bindMounts ? { },
   # Extra NixOS modules for inside the container.
   modules ? [ ],
-  # Optionally also join the user's own WireGuard network, as a peer of their
-  # router: { address, endpoint, publicKey, allowedIPs }. Its keys are in
-  # secrets.yaml at wireguard/<name>-private-key and wireguard/<name>-preshared-key.
+  # Optionally also a WireGuard server for the user's router to connect to, on
+  # the host's public port: { address, port, publicKey, allowedIPs }, publicKey
+  # and allowedIPs being the router's. Its keys are in secrets.yaml at
+  # wireguard/<name>-private-key and wireguard/<name>-preshared-key.
   wireguard ? null,
 }:
 { config, lib, ... }:
@@ -38,6 +39,13 @@ in
   # Containers share the host's kernel and can't load modules themselves.
   boot.kernelModules = lib.optional (wireguard != null) "wireguard";
 
+  # The router connects to the host's public address; this passes it on.
+  networking.nat.forwardPorts = lib.optional (wireguard != null) {
+    proto = "udp";
+    sourcePort = wireguard.port;
+    destination = "10.233.${toString subnet}.2:${toString wireguard.port}";
+  };
+
   containers.${name} = {
     autoStart = true;
     # Own network stack, for its own tailscaled.
@@ -61,24 +69,22 @@ in
 
       networking.wireguard.interfaces.wg0 = lib.mkIf (wireguard != null) {
         ips = [ wireguard.address ];
+        listenPort = wireguard.port;
         privateKeyFile = wgKey "private-key";
+        # No endpoint: the router connects and keeps the tunnel open.
         peers = [
           {
-            inherit (wireguard) endpoint publicKey allowedIPs;
+            inherit (wireguard) publicKey allowedIPs;
             presharedKeyFile = wgKey "preshared-key";
-            # The router can only reach the container while it keeps the
-            # tunnel open, as the container sits behind the host's NAT.
-            persistentKeepalive = 25;
-            # The endpoint is a dynamic DNS name.
-            dynamicEndpointRefreshSeconds = 300;
           }
         ];
       };
 
-      # The host's services, as on the tailnet.
-      networking.firewall.interfaces.wg0.allowedTCPPorts = lib.mkIf (wireguard != null) (
-        lib.attrValues ports
-      );
+      networking.firewall = lib.mkIf (wireguard != null) {
+        allowedUDPPorts = [ wireguard.port ];
+        # The host's services, as on the tailnet.
+        interfaces.wg0.allowedTCPPorts = lib.attrValues ports;
+      };
 
       # Join the tailnet once with `sudo tailscale up`; the login persists in /var/lib/tailscale.
       services.tailscale = {
