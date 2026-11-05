@@ -43,6 +43,8 @@ in
       config.services.navidrome.package
       pkgs.util-linux
     ];
+    # script runs its command through $SHELL, which for navidrome is nologin.
+    environment.SHELL = lib.getExe pkgs.bash;
     serviceConfig = {
       Type = "oneshot";
       User = "navidrome";
