@@ -19,8 +19,7 @@ in
       # Lets containers be browsed by tailnet name, not only by IP, and Paal
       # through his own proxy.
       rpc-host-whitelist = lib.concatStringsSep "," (
-        [ "transmission.paaa.al" ]
-        ++ map (name: "${name},${name}.*") (lib.attrNames config.containers)
+        [ "transmission.paaa.al" ] ++ map (name: "${name},${name}.*") (lib.attrNames config.containers)
       );
     };
   };
