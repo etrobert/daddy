@@ -63,7 +63,12 @@ in
 
   # Installing or updating a plugin restarts Lidarr by exiting cleanly, which
   # on-failure would leave stopped.
-  systemd.services.lidarr.serviceConfig.Restart = lib.mkForce "always";
+  systemd.services.lidarr.serviceConfig = {
+    Restart = lib.mkForce "always";
+    # Group-writable, so others in users can add to folders Lidarr creates in
+    # the shared library.
+    UMask = "0002";
+  };
 
   # /storage/music belongs to the users group, with setgid so new files stay in it.
   users.users.lidarr.extraGroups = [ "users" ];
