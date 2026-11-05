@@ -21,7 +21,8 @@
     secrets = {
       "slskd/soulseek-password" = { };
       "slskd/web-password" = { };
-      "slskd/api-key" = { };
+      # Lidarr runs as soft.
+      "slskd/api-key".owner = "soft";
     };
     templates."slskd.env" = {
       content = ''

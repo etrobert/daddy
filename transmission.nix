@@ -14,7 +14,7 @@ in
       # firewall below keeps the port closed on the public interface.
       rpc-bind-address = "0.0.0.0";
       # Transmission only answers loopback by default.
-      rpc-whitelist = "127.0.0.1,::1,100.*.*.*";
+      rpc-whitelist = "127.0.0.1,::1,100.*.*.*,${config.containers.peira.localAddress}";
     };
   };
 
