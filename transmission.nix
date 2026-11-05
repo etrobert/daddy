@@ -16,9 +16,10 @@ in
       # Transmission only answers loopback by default. 10.233 is the containers'
       # range, as their host-proxy.nix connects from there.
       rpc-whitelist = "127.0.0.1,::1,100.*.*.*,10.233.*.*";
-      # Lets containers be browsed by tailnet name, not only by IP.
-      rpc-host-whitelist = lib.concatMapStringsSep "," (name: "${name},${name}.*") (
-        lib.attrNames config.containers
+      # Lets containers be browsed by tailnet name, not only by IP, and Paal
+      # through his own proxy.
+      rpc-host-whitelist = lib.concatStringsSep "," (
+        [ "transmission.paaa.al" ] ++ map (name: "${name},${name}.*") (lib.attrNames config.containers)
       );
     };
   };
