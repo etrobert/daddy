@@ -12,9 +12,16 @@
         cache.retention = 60;
       };
 
-      # Only Caddy on loopback should reach it.
-      web.ip_address = "127.0.0.1";
+      # All interfaces, so containers reach it for their tailnet. The firewall
+      # below keeps the port closed on the public interface, where Caddy serves it.
+      web.ip_address = "0.0.0.0";
     };
+  };
+
+  networking.firewall.interfaces = {
+    tailscale0.allowedTCPPorts = [ config.services.slskd.settings.web.port ];
+    # Every container, for host-proxy.nix.
+    "ve-+".allowedTCPPorts = [ config.services.slskd.settings.web.port ];
   };
 
   sops = {
