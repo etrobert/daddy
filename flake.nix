@@ -48,6 +48,11 @@
             name = "paal";
             subnet = 2;
             user = ./users/paal.nix;
+            bindMounts = {
+              "/storage/music".isReadOnly = false;
+              "/storage/downloads" = { };
+              "/var/lib/slskd/downloads" = { };
+            };
           })
           ./peira.nix
           ./slskd.nix
