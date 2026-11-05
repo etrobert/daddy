@@ -59,7 +59,8 @@
             wireguard = {
               address = "10.234.2.2/24";
               port = 51822;
-              publicKey = "/uC8P/QCWCDhd2nJa+v8DzjB8JbP9tjhkrIFfrewszg=";
+              # The FRITZ!Box's own key pair, which all its WireGuard connections share.
+              publicKey = "mqotR4eXHsRQIWu/4Ue2nkC2ASYx0fRhlZHkqno4/AA=";
               # The FRITZ!Box's tunnel address, and his home network behind it.
               allowedIPs = [
                 "10.234.2.1/32"
