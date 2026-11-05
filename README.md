@@ -29,6 +29,8 @@ the login link it prints to add daddy to the tailnet.
 
 ## Soularr
 
+Disabled for now: set `enable = true` in `soularr.nix` to bring it back.
+
 Runs every 5 minutes once `/etc/soularr.ini` exists, placed by hand with mode
 600. Base it on [the example](https://github.com/mrusse/soularr/blob/v1.2.3/config.ini).
 Under `[Slskd]`, use `http://127.0.0.1:5030` and `/var/lib/slskd/downloads`, with

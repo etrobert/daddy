@@ -24,6 +24,8 @@ let
 in
 {
   systemd.services.soularr = {
+    # Disabled for now.
+    enable = false;
     description = "Download Lidarr's wanted albums through slskd";
     after = [
       "network-online.target"
