@@ -30,8 +30,10 @@ the login link it prints to add daddy to the tailnet.
 
 ## Paal's container
 
-`paal` runs Tailscale on its own tailnet. After the first deploy, Paal joins it
-once from the host:
+`paal` runs Tailscale on its own tailnet and joins it by itself whenever it is
+logged out, using the auth key at `paal-container/tailscale-auth-key` in
+`secrets.yaml`. If that key has expired, replace it, or log in by hand from the
+host:
 
 ```sh
 sudo nixos-container root-login paal
