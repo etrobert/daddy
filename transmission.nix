@@ -10,15 +10,15 @@ in
     downloadDirPermissions = "755";
     settings = {
       download-dir = dir;
-      # All interfaces, as tailscale0 may not exist yet when this starts. The
-      # firewall below keeps the port closed on the public interface.
+      # All interfaces, as the containers' links may not exist yet when this
+      # starts. The firewall below keeps the port closed on the public interface.
       rpc-bind-address = "0.0.0.0";
-      # Transmission only answers loopback by default.
-      rpc-whitelist = "127.0.0.1,::1,100.*.*.*";
+      # Transmission only answers loopback by default; 10.233 is the containers'.
+      rpc-whitelist = "127.0.0.1,::1,10.233.*.*";
     };
   };
 
-  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [
+  networking.firewall.interfaces."ve-+".allowedTCPPorts = [
     config.services.transmission.settings.rpc-port
   ];
 
