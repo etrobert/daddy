@@ -10,6 +10,12 @@ let
   hostAddress = "10.233.${toString subnet}.1";
 in
 {
+  # Otherwise it would bind the empty directories beneath the datasets.
+  systemd.services."container@${name}".unitConfig.RequiresMountsFor = [
+    "/storage/music"
+    "/storage/downloads"
+  ];
+
   containers.${name} = {
     autoStart = true;
     # Own network stack, so its tailscaled doesn't clash with the host's.
@@ -17,6 +23,14 @@ in
     inherit hostAddress;
     localAddress = "10.233.${toString subnet}.2";
     enableTun = true;
+
+    # As in peira: same paths inside, so Lidarr needs no remote path mappings.
+    bindMounts = {
+      "/storage/music".isReadOnly = false;
+      "/storage/downloads" = { };
+      "/var/lib/slskd/downloads" = { };
+      ${config.sops.secrets."slskd/api-key".path} = { };
+    };
 
     config = {
       imports = [
