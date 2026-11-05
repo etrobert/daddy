@@ -34,6 +34,11 @@ One Lidarr, on the develop branch for plugins such as Tubifarry, imports into
 `/storage/music`. Each container serves it to its own tailnet at
 `http://<container>:8686`. Anyone on those tailnets can use it, with no login.
 
+## Navidrome
+
+Navidrome serves `/storage/music` at <https://navidrome.etiennerobert.com>, and
+to each container's tailnet at `http://<container>:4533`, with its usual login.
+
 ## Tailscale
 
 After the first deploy, someone runs `sudo tailscale up` on the box and opens

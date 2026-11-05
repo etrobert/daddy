@@ -54,7 +54,6 @@
               "/storage/downloads" = { };
               "/var/lib/slskd/downloads" = { };
             };
-            modules = [ ./container-navidrome.nix ];
           })
           ./peira.nix
           ./slskd.nix

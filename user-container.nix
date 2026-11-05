@@ -35,6 +35,7 @@ in
             transmission = config.services.transmission.settings.rpc-port;
             slskd = config.services.slskd.settings.web.port;
             lidarr = config.services.lidarr.settings.server.port;
+            navidrome = config.services.navidrome.settings.Port;
           };
         })
       ]
