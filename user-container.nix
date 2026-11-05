@@ -6,6 +6,8 @@
   user,
   # Host paths to share, as in containers.<name>.bindMounts.
   bindMounts ? { },
+  # Extra NixOS modules for inside the container.
+  modules ? [ ],
 }:
 { config, lib, ... }:
 let
@@ -34,7 +36,8 @@ in
             slskd = config.services.slskd.settings.web.port;
           };
         })
-      ];
+      ]
+      ++ modules;
 
       # Join the tailnet once with `sudo tailscale up`; the login persists in /var/lib/tailscale.
       services.tailscale = {

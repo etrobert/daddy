@@ -53,6 +53,7 @@
               "/storage/downloads" = { };
               "/var/lib/slskd/downloads" = { };
             };
+            modules = [ ./lidarr.nix ];
           })
           ./peira.nix
           ./slskd.nix
