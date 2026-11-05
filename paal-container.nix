@@ -1,4 +1,7 @@
+{ config, ... }:
 {
+  sops.secrets."paal-container/tailscale-auth-key" = { };
+
   containers.paal = {
     autoStart = true;
     # Own network stack, so its tailscaled doesn't clash with the host's.
@@ -7,12 +10,18 @@
     localAddress = "10.233.2.2";
     enableTun = true;
 
+    bindMounts."/run/tailscale-auth-key" = {
+      hostPath = config.sops.secrets."paal-container/tailscale-auth-key".path;
+      isReadOnly = true;
+    };
+
     config = {
       imports = [ ./users/paal.nix ];
 
-      # Join the tailnet once with `sudo tailscale up`; the login persists in /var/lib/tailscale.
       services.tailscale = {
         enable = true;
+        # Only used while logged out; the login persists in /var/lib/tailscale.
+        authKeyFile = "/run/tailscale-auth-key";
         # Lets peers reach the container directly instead of through a relay.
         openFirewall = true;
       };
