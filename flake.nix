@@ -51,7 +51,8 @@
             bindMounts = {
               "/storage/music".isReadOnly = false;
               "/storage/downloads" = { };
-              "/var/lib/slskd/downloads" = { };
+              # Writable, as Lidarr moves downloads into the library.
+              "/var/lib/slskd/downloads".isReadOnly = false;
             };
             modules = [
               ./lidarr.nix
