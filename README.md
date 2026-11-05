@@ -62,9 +62,34 @@ it.
 
 Then `ssh <you>@<you>` works over your tailnet.
 
-The container can also run a WireGuard server for your router to connect to,
-on a UDP port of the host's public address: pass `wireguard` to
-`user-container.nix`, as `paal` does, with a port no other container uses, and
-put the server's private key and a preshared key in `secrets.yaml` at
-`wireguard/<you>-private-key` and `wireguard/<you>-preshared-key`. The same
-services are then at its WireGuard address.
+## Join over WireGuard
+
+daddy runs a WireGuard server for everyone in `wireguard-peers.nix`, at
+`51.91.29.38:51820`, with public key `X3tAaXEYfw1KhFS6x2CjVepMIrHGo3AEWrhrIs6rqnU=`.
+Over it, daddy is `10.234.0.1`: Navidrome on 4533, Lidarr on 8686, Transmission
+on 9091 and slskd on 5030. Peers can't reach each other.
+
+1. Get a public key: your WireGuard app makes a key pair for a new tunnel, and a
+   FRITZ!Box already has one (in any of its WireGuard device configs, under
+   `[Peer]`).
+2. Add yourself to `wireguard-peers.nix` with a free `ip`, and open a PR.
+3. Once merged, set up the tunnel with your `ip`:
+
+   ```ini
+   [Interface]
+   # Your app fills in PrivateKey. Leave it out for a FRITZ!Box.
+   Address = 10.234.0.<n>/24
+
+   [Peer]
+   PublicKey = X3tAaXEYfw1KhFS6x2CjVepMIrHGo3AEWrhrIs6rqnU=
+   AllowedIPs = 10.234.0.0/24
+   Endpoint = 51.91.29.38:51820
+   PersistentKeepalive = 25
+   ```
+
+   On a FRITZ!Box, import it under Internet > Permit Access > VPN (WireGuard) >
+   Add connection > Link networks, answering yes to the other side being set
+   up already, and list your home network under `networks` in step 2.
+
+Two peers' `networks` can't overlap. FRITZ!Boxes default to `192.168.178.0/24`,
+so a second one has to change its home network first.
