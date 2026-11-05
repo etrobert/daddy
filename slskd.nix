@@ -24,7 +24,7 @@
     "ve-+".allowedTCPPorts = [ config.services.slskd.settings.web.port ];
   };
 
-  # Lidarr in a container imports by moving files out, so its user needs write
+  # Lidarr imports by moving files out, so its user needs write
   # access here. The default ACL passes that on to every new download.
   systemd.tmpfiles.settings."10-slskd-lidarr"."/var/lib/slskd/downloads"."A+".argument =
     let

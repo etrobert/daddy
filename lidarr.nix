@@ -1,5 +1,6 @@
-# Lidarr from its develop branch, as only develop and nightly builds support
-# plugins such as Tubifarry. Install those from System > Plugins.
+# One Lidarr for everyone, on the host, served to each container's tailnet by
+# host-proxy.nix. From its develop branch, as only develop and nightly builds
+# support plugins such as Tubifarry. Install those from System > Plugins.
 {
   config,
   lib,
@@ -73,7 +74,12 @@ in
   # /storage/music belongs to the users group, with setgid so new files stay in it.
   users.users.lidarr.extraGroups = [ "users" ];
 
-  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [
-    config.services.lidarr.settings.server.port
-  ];
+  # Before the mount, /storage/music is an empty directory.
+  systemd.services.lidarr.unitConfig.RequiresMountsFor = [ "/storage/music" ];
+
+  networking.firewall.interfaces = {
+    tailscale0.allowedTCPPorts = [ config.services.lidarr.settings.server.port ];
+    # Every container, for host-proxy.nix.
+    "ve-+".allowedTCPPorts = [ config.services.lidarr.settings.server.port ];
+  };
 }
