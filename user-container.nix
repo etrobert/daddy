@@ -8,11 +8,6 @@
   bindMounts ? { },
   # Extra NixOS modules for inside the container.
   modules ? [ ],
-  # Optionally also a WireGuard server for the user's router to connect to, on
-  # the host's public port: { address, port, publicKey, allowedIPs }, publicKey
-  # and allowedIPs being the router's. Its keys are in secrets.yaml at
-  # wireguard/<name>-private-key and wireguard/<name>-preshared-key.
-  wireguard ? null,
 }:
 { config, lib, ... }:
 let
@@ -24,27 +19,10 @@ let
     lidarr = config.services.lidarr.settings.server.port;
     navidrome = config.services.navidrome.settings.Port;
   };
-
-  wgKey = kind: config.sops.secrets."wireguard/${name}-${kind}".path;
 in
 {
   # Otherwise it would bind the empty directories beneath unmounted datasets.
   systemd.services."container@${name}".unitConfig.RequiresMountsFor = lib.attrNames bindMounts;
-
-  sops.secrets = lib.mkIf (wireguard != null) {
-    "wireguard/${name}-private-key" = { };
-    "wireguard/${name}-preshared-key" = { };
-  };
-
-  # Containers share the host's kernel and can't load modules themselves.
-  boot.kernelModules = lib.optional (wireguard != null) "wireguard";
-
-  # The router connects to the host's public address; this passes it on.
-  networking.nat.forwardPorts = lib.optional (wireguard != null) {
-    proto = "udp";
-    sourcePort = wireguard.port;
-    destination = "10.233.${toString subnet}.2:${toString wireguard.port}";
-  };
 
   containers.${name} = {
     autoStart = true;
@@ -53,12 +31,7 @@ in
     inherit hostAddress;
     localAddress = "10.233.${toString subnet}.2";
     enableTun = true;
-    bindMounts =
-      bindMounts
-      // lib.optionalAttrs (wireguard != null) {
-        ${wgKey "private-key"} = { };
-        ${wgKey "preshared-key"} = { };
-      };
+    inherit bindMounts;
 
     config = {
       imports = [
@@ -66,25 +39,6 @@ in
         (import ./host-proxy.nix { inherit hostAddress ports; })
       ]
       ++ modules;
-
-      networking.wireguard.interfaces.wg0 = lib.mkIf (wireguard != null) {
-        ips = [ wireguard.address ];
-        listenPort = wireguard.port;
-        privateKeyFile = wgKey "private-key";
-        # No endpoint: the router connects and keeps the tunnel open.
-        peers = [
-          {
-            inherit (wireguard) publicKey allowedIPs;
-            presharedKeyFile = wgKey "preshared-key";
-          }
-        ];
-      };
-
-      networking.firewall = lib.mkIf (wireguard != null) {
-        allowedUDPPorts = [ wireguard.port ];
-        # The host's services, as on the tailnet.
-        interfaces.wg0.allowedTCPPorts = lib.attrValues ports;
-      };
 
       # Join the tailnet once with `sudo tailscale up`; the login persists in /var/lib/tailscale.
       services.tailscale = {

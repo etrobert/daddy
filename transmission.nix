@@ -13,9 +13,10 @@ in
       # All interfaces, so containers reach it. The firewall below keeps the
       # port closed on the public interface.
       rpc-bind-address = "0.0.0.0";
-      # Transmission only answers loopback by default. 10.233 is the containers'
-      # range, as their host-proxy.nix connects from there.
-      rpc-whitelist = "127.0.0.1,::1,10.233.*.*";
+      # Transmission only answers loopback by default. Requests also come from
+      # containers and from WireGuard peers' home networks, so the firewall
+      # below decides who reaches the port instead.
+      rpc-whitelist-enabled = false;
       # Lets containers be browsed by tailnet name, not only by IP, and Paal
       # through his own proxy.
       rpc-host-whitelist = lib.concatStringsSep "," (
@@ -25,7 +26,7 @@ in
   };
 
   networking.firewall.interfaces = {
-    # Every container, for host-proxy.nix.
+    # Every container, for host-proxy.nix. WireGuard peers: wireguard.nix.
     "ve-+".allowedTCPPorts = [ config.services.transmission.settings.rpc-port ];
   };
 

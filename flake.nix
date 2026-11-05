@@ -54,23 +54,11 @@
               "/storage/downloads" = { };
               "/var/lib/slskd/downloads" = { };
             };
-            # Paal's FRITZ!Box connects here with "Link networks": his home has
-            # no public IPv4 address, and the host has no IPv6.
-            wireguard = {
-              address = "10.234.2.2/24";
-              port = 51822;
-              # The FRITZ!Box's own key pair, which all its WireGuard connections share.
-              publicKey = "mqotR4eXHsRQIWu/4Ue2nkC2ASYx0fRhlZHkqno4/AA=";
-              # The FRITZ!Box's tunnel address, and his home network behind it.
-              allowedIPs = [
-                "10.234.2.1/32"
-                "192.168.10.0/24"
-              ];
-            };
           })
           ./peira.nix
           ./slskd.nix
           ./transmission.nix
+          ./wireguard.nix
           ./users/soft.nix
           ./users/softer.nix
           ./users/paal.nix
