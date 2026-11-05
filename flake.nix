@@ -44,6 +44,7 @@
           ./configuration.nix
           ./disko.nix
           ./navidrome.nix
+          ./paal-container.nix
           ./peira.nix
           ./slskd.nix
           ./tailscale.nix
