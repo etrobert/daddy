@@ -14,7 +14,7 @@ in
       # firewall below keeps the port closed on the public interface.
       rpc-bind-address = "0.0.0.0";
       # Transmission only answers loopback by default. 10.233 is the containers'
-      # range, as their transmission-proxy connects from there.
+      # range, as their host-proxy.nix connects from there.
       rpc-whitelist = "127.0.0.1,::1,100.*.*.*,10.233.*.*";
       # Lets containers be browsed by tailnet name, not only by IP.
       rpc-host-whitelist = lib.concatMapStringsSep "," (name: "${name},${name}.*") (
@@ -25,7 +25,7 @@ in
 
   networking.firewall.interfaces = {
     tailscale0.allowedTCPPorts = [ config.services.transmission.settings.rpc-port ];
-    # Every container, for transmission-proxy.nix.
+    # Every container, for host-proxy.nix.
     "ve-+".allowedTCPPorts = [ config.services.transmission.settings.rpc-port ];
   };
 

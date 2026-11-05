@@ -26,6 +26,8 @@ ssh -NL 9091:127.0.0.1:9091 <you>@51.91.29.38
 Containers share this one instance, each serving it to its own tailnet at
 `http://<container>:9091`. Anyone on that tailnet can use it, with no login.
 
+slskd is shared the same way, at `http://<container>:5030`, with its usual login.
+
 ## Tailscale
 
 After the first deploy, someone runs `sudo tailscale up` on the box and opens

@@ -21,9 +21,12 @@ in
     config = {
       imports = [
         user
-        (import ./transmission-proxy.nix {
+        (import ./host-proxy.nix {
           inherit hostAddress;
-          port = config.services.transmission.settings.rpc-port;
+          ports = {
+            transmission = config.services.transmission.settings.rpc-port;
+            slskd = config.services.slskd.settings.web.port;
+          };
         })
       ];
 
