@@ -28,7 +28,11 @@
     secrets = {
       "slskd/soulseek-password" = { };
       "slskd/web-password" = { };
-      "slskd/api-key" = { };
+      # Read by each user's Lidarr, bind-mounted into their container.
+      "slskd/api-key" = {
+        group = "users";
+        mode = "0440";
+      };
     };
     templates."slskd.env" = {
       content = ''
