@@ -61,3 +61,9 @@ it.
    ```
 
 Then `ssh <you>@<you>` works over your tailnet.
+
+The container can also join your own WireGuard network, as a device of your
+router: pass `wireguard` to `user-container.nix`, as `paal` does, and put the
+device's private and preshared keys in `secrets.yaml` at
+`wireguard/<you>-private-key` and `wireguard/<you>-preshared-key`. The same
+services are then at its WireGuard address.

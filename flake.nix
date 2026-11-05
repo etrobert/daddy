@@ -54,6 +54,14 @@
               "/storage/downloads" = { };
               "/var/lib/slskd/downloads" = { };
             };
+            # A device on Paal's FRITZ!Box, with the address it handed out.
+            wireguard = {
+              address = "192.168.10.203/32";
+              endpoint = "9qo5i95uzvrcwy37.myfritz.net:57867";
+              publicKey = "mqotR4eXHsRQIWu/4Ue2nkC2ASYx0fRhlZHkqno4/AA=";
+              # Only his home network, not everything as the FRITZ!Box suggests.
+              allowedIPs = [ "192.168.10.0/24" ];
+            };
           })
           ./peira.nix
           ./slskd.nix
