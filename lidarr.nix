@@ -78,7 +78,6 @@ in
   systemd.services.lidarr.unitConfig.RequiresMountsFor = [ "/storage/music" ];
 
   networking.firewall.interfaces = {
-    tailscale0.allowedTCPPorts = [ config.services.lidarr.settings.server.port ];
     # Every container, for host-proxy.nix.
     "ve-+".allowedTCPPorts = [ config.services.lidarr.settings.server.port ];
   };

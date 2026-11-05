@@ -19,7 +19,7 @@ in
 
   containers.${name} = {
     autoStart = true;
-    # Own network stack, so its tailscaled doesn't clash with the host's.
+    # Own network stack, for its own tailscaled.
     privateNetwork = true;
     inherit hostAddress;
     localAddress = "10.233.${toString subnet}.2";

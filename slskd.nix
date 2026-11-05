@@ -19,7 +19,6 @@
   };
 
   networking.firewall.interfaces = {
-    tailscale0.allowedTCPPorts = [ config.services.slskd.settings.web.port ];
     # Every container, for host-proxy.nix.
     "ve-+".allowedTCPPorts = [ config.services.slskd.settings.web.port ];
   };

@@ -13,11 +13,8 @@ push that does not build is skipped and the box keeps its current system.
 
 ## Transmission
 
-Downloads land in `/storage/downloads`. On the tailnet, the web UI is at
-<http://100.117.28.35:9091>, with no login, so anyone on the tailnet can use it.
-
-Otherwise, open it through an SSH tunnel, then browse to
-<http://localhost:9091>:
+Downloads land in `/storage/downloads`. Open the web UI through an SSH tunnel,
+then browse to <http://localhost:9091>:
 
 ```sh
 ssh -NL 9091:127.0.0.1:9091 <you>@51.91.29.38
@@ -38,11 +35,6 @@ One Lidarr, on the develop branch for plugins such as Tubifarry, imports into
 
 Navidrome serves `/storage/music` at <https://navidrome.etiennerobert.com>, and
 to each container's tailnet at `http://<container>:4533`, with its usual login.
-
-## Tailscale
-
-After the first deploy, someone runs `sudo tailscale up` on the box and opens
-the login link it prints to add daddy to the tailnet.
 
 ## Your own container
 
