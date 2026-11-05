@@ -46,7 +46,6 @@
           ./navidrome.nix
           ./peira.nix
           ./slskd.nix
-          ./soularr.nix
           ./tailscale.nix
           ./transmission.nix
           ./users/soft.nix
