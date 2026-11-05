@@ -23,7 +23,38 @@ Otherwise, open it through an SSH tunnel, then browse to
 ssh -NL 9091:127.0.0.1:9091 <you>@51.91.29.38
 ```
 
+Containers share this one instance, each serving it to its own tailnet at
+`http://<container>:9091`. Anyone on that tailnet can use it, with no login.
+
+slskd is shared the same way, at `http://<container>:5030`, with its usual login.
+
 ## Tailscale
 
 After the first deploy, someone runs `sudo tailscale up` on the box and opens
 the login link it prints to add daddy to the tailnet.
+
+## Your own container
+
+A container gives you your own tailnet, with SSH and the shared Transmission on
+it.
+
+1. Add yourself as in [Adding yourself](#adding-yourself).
+2. Add this to `modules` in `flake.nix`, with a name of at most 11 characters and
+   a `subnet` no other container uses (1 is peira, 2 is paal):
+
+   ```nix
+   (import ./user-container.nix {
+     name = "<you>";
+     subnet = 3;
+     user = ./users/<you>.nix;
+   })
+   ```
+
+3. Once merged, join your tailnet once from the host:
+
+   ```sh
+   sudo nixos-container root-login <you>
+   tailscale up
+   ```
+
+Then `ssh <you>@<you>` works over your tailnet.
