@@ -66,7 +66,6 @@ in
   };
 
   networking.firewall.interfaces = {
-    tailscale0.allowedTCPPorts = [ Port ];
     # Every container, for host-proxy.nix.
     "ve-+".allowedTCPPorts = [ Port ];
   };

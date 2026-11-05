@@ -57,7 +57,6 @@
           })
           ./peira.nix
           ./slskd.nix
-          ./tailscale.nix
           ./transmission.nix
           ./users/soft.nix
           ./users/softer.nix
