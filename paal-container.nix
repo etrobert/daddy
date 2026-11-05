@@ -1,7 +1,7 @@
 {
   containers.paal = {
     autoStart = true;
-    # Own network stack, so its tailscaled doesn't clash with other containers'.
+    # Own network stack, so its tailscaled doesn't clash with the host's.
     privateNetwork = true;
     hostAddress = "10.233.2.1";
     localAddress = "10.233.2.2";
