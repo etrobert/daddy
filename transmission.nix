@@ -13,14 +13,15 @@ in
       # All interfaces, as tailscale0 may not exist yet when this starts. The
       # firewall below keeps the port closed on the public interface.
       rpc-bind-address = "0.0.0.0";
-      # Transmission only answers loopback by default.
-      rpc-whitelist = "127.0.0.1,::1,100.*.*.*";
+      # Transmission only answers loopback by default; 10.233 is the containers'.
+      rpc-whitelist = "127.0.0.1,::1,100.*.*.*,10.233.*.*";
     };
   };
 
-  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [
-    config.services.transmission.settings.rpc-port
-  ];
+  networking.firewall.interfaces = {
+    tailscale0.allowedTCPPorts = [ config.services.transmission.settings.rpc-port ];
+    "ve-+".allowedTCPPorts = [ config.services.transmission.settings.rpc-port ];
+  };
 
   # nixpkgs declares transmission-setup without anything that starts it (since NixOS/nixpkgs@314c912811).
   systemd.services.transmission-setup.requiredBy = [ "transmission.service" ];
