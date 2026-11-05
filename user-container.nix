@@ -1,18 +1,28 @@
-{ config, ... }:
+# A user's own container, reached over their own tailnet. subnet must be unique
+# among containers.
 {
-  containers.paal = {
+  name,
+  subnet,
+  user,
+}:
+{ config, ... }:
+let
+  hostAddress = "10.233.${toString subnet}.1";
+in
+{
+  containers.${name} = {
     autoStart = true;
     # Own network stack, so its tailscaled doesn't clash with the host's.
     privateNetwork = true;
-    hostAddress = "10.233.2.1";
-    localAddress = "10.233.2.2";
+    inherit hostAddress;
+    localAddress = "10.233.${toString subnet}.2";
     enableTun = true;
 
     config = {
       imports = [
-        ./users/paal.nix
+        user
         (import ./transmission-proxy.nix {
-          inherit (config.containers.paal) hostAddress;
+          inherit hostAddress;
           port = config.services.transmission.settings.rpc-port;
         })
       ];

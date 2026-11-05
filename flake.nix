@@ -44,7 +44,11 @@
           ./configuration.nix
           ./disko.nix
           ./navidrome.nix
-          ./paal-container.nix
+          (import ./user-container.nix {
+            name = "paal";
+            subnet = 2;
+            user = ./users/paal.nix;
+          })
           ./peira.nix
           ./slskd.nix
           ./tailscale.nix

@@ -23,8 +23,7 @@ Otherwise, open it through an SSH tunnel, then browse to
 ssh -NL 9091:127.0.0.1:9091 <you>@51.91.29.38
 ```
 
-Containers share this one instance. A container that imports
-`transmission-proxy.nix` serves it to its own tailnet, at
+Containers share this one instance, each serving it to its own tailnet at
 `http://<container>:9091`. Anyone on that tailnet can use it, with no login.
 
 ## Tailscale
@@ -32,14 +31,28 @@ Containers share this one instance. A container that imports
 After the first deploy, someone runs `sudo tailscale up` on the box and opens
 the login link it prints to add daddy to the tailnet.
 
-## Paal's container
+## Your own container
 
-`paal` runs Tailscale on its own tailnet. After the first deploy, Paal joins it
-once from the host:
+A container gives you your own tailnet, with SSH and the shared Transmission on
+it.
 
-```sh
-sudo nixos-container root-login paal
-tailscale up
-```
+1. Add yourself as in [Adding yourself](#adding-yourself).
+2. Add this to `modules` in `flake.nix`, with a name of at most 11 characters and
+   a `subnet` no other container uses (1 is peira, 2 is paal):
 
-Then `ssh paal@paal` works over the tailnet.
+   ```nix
+   (import ./user-container.nix {
+     name = "<you>";
+     subnet = 3;
+     user = ./users/<you>.nix;
+   })
+   ```
+
+3. Once merged, join your tailnet once from the host:
+
+   ```sh
+   sudo nixos-container root-login <you>
+   tailscale up
+   ```
+
+Then `ssh <you>@<you>` works over your tailnet.
