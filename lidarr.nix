@@ -1,6 +1,11 @@
 # Lidarr from its develop branch, as only develop and nightly builds support
 # plugins such as Tubifarry. Install those from System > Plugins.
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   version = "3.2.0.5144";
 
@@ -55,6 +60,10 @@ in
     enable = true;
     inherit package;
   };
+
+  # Installing or updating a plugin restarts Lidarr by exiting cleanly, which
+  # on-failure would leave stopped.
+  systemd.services.lidarr.serviceConfig.Restart = lib.mkForce "always";
 
   # /storage/music belongs to the users group, with setgid so new files stay in it.
   users.users.lidarr.extraGroups = [ "users" ];
