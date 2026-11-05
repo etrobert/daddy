@@ -21,8 +21,11 @@
     secrets = {
       "slskd/soulseek-password" = { };
       "slskd/web-password" = { };
-      # Lidarr runs as soft.
-      "slskd/api-key".owner = "soft";
+      # Read by each user's Lidarr, bind-mounted into their container.
+      "slskd/api-key" = {
+        group = "users";
+        mode = "0440";
+      };
     };
     templates."slskd.env" = {
       content = ''
