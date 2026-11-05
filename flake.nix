@@ -43,6 +43,7 @@
           etrobert-setup.nixosModules.umami
           ./configuration.nix
           ./disko.nix
+          ./lidarr.nix
           ./navidrome.nix
           (import ./user-container.nix {
             name = "paal";
@@ -51,13 +52,9 @@
             bindMounts = {
               "/storage/music".isReadOnly = false;
               "/storage/downloads" = { };
-              # Writable, as Lidarr moves downloads into the library.
-              "/var/lib/slskd/downloads".isReadOnly = false;
+              "/var/lib/slskd/downloads" = { };
             };
-            modules = [
-              ./lidarr.nix
-              ./container-navidrome.nix
-            ];
+            modules = [ ./container-navidrome.nix ];
           })
           ./peira.nix
           ./slskd.nix

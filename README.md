@@ -28,6 +28,12 @@ Containers share this one instance, each serving it to its own tailnet at
 
 slskd is shared the same way, at `http://<container>:5030`, with its usual login.
 
+## Lidarr
+
+One Lidarr, on the develop branch for plugins such as Tubifarry, imports into
+`/storage/music`. Each container serves it to its own tailnet at
+`http://<container>:8686`. Anyone on those tailnets can use it, with no login.
+
 ## Tailscale
 
 After the first deploy, someone runs `sudo tailscale up` on the box and opens
