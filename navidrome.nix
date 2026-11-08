@@ -26,7 +26,7 @@ let
         ];
       }
       ''
-        unzip -p "$(grep -l nd-lyrics ${pluginsFolder}/*.ndp | head -1)" manifest.json | jq '
+        unzip -p ${pluginsFolder}/nd-lyrics.ndp manifest.json | jq '
           .config.schema as $s
           | def defaults: to_entries | map(select(.value | has("default")) | {key, value: .value.default}) | from_entries;
           ($s.properties.providersList.items.properties | defaults | del(.provider)) as $provider
