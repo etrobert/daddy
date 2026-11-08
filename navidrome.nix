@@ -12,7 +12,7 @@ let
   users = [ "paal" ];
   secret = user: "navidrome/${user}-password";
 
-  # The folder Navidrome loads plugins from, with those in withPlugins below.
+  # The folder Navidrome loads plugins from, with those in plugins below.
   pluginsFolder = config.services.navidrome.settings.Plugins.Folder;
 
   # The plugin's own defaults, from its manifest, but writing lyrics next to each
@@ -26,7 +26,7 @@ let
         ];
       }
       ''
-        unzip -p "$(grep -l nd-lyrics ${pluginsFolder}/*.ndp | head -1)" manifest.json | jq '
+        unzip -p ${pluginsFolder}/nd-lyrics.ndp manifest.json | jq '
           .config.schema as $s
           | def defaults: to_entries | map(select(.value | has("default")) | {key, value: .value.default}) | from_entries;
           ($s.properties.providersList.items.properties | defaults | del(.provider)) as $provider
@@ -42,7 +42,8 @@ in
     enable = true;
     # Lyrics from LRCLIB and other sources, for clients that ask; the web UI
     # doesn't show plugin lyrics yet.
-    withPlugins = p: [ p.lyrics-plugin ];
+    # Plugins are WebAssembly, hence the cross package set.
+    plugins = [ pkgs.pkgsCross.wasi32.navidromePlugins.lyrics-plugin ];
     settings = {
       # All interfaces, so containers reach it for their tailnet. The firewall
       # below keeps the port closed on the public interface, where Caddy serves it.
