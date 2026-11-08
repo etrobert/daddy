@@ -12,20 +12,8 @@ let
   users = [ "paal" ];
   secret = user: "navidrome/${user}-password";
 
-  # Lyrics from LRCLIB and other sources, for clients that ask; the web UI
-  # doesn't show plugin lyrics yet.
-  lyricsPlugin = pkgs.fetchurl {
-    url = "https://github.com/J0R6IT0/navidrome-lyrics-plugin/releases/download/v8.1.0/nd-lyrics.ndp";
-    sha256 = "29dd571ba0d4bb756e62c0d5c594a2d7e7c9ccec2950f3b027bd64c73c605715";
-  };
-
-  # Plugins, by the id Navidrome knows them by (the file name without .ndp).
-  plugins = pkgs.linkFarm "navidrome-plugins" [
-    {
-      name = "nd-lyrics.ndp";
-      path = lyricsPlugin;
-    }
-  ];
+  # The folder Navidrome loads plugins from, with those in withPlugins below.
+  pluginsFolder = config.services.navidrome.settings.Plugins.Folder;
 
   # The plugin's own defaults, from its manifest, but writing lyrics next to each
   # song without replacing existing files. Navidrome only accepts a complete config.
@@ -38,7 +26,7 @@ let
         ];
       }
       ''
-        unzip -p ${lyricsPlugin} manifest.json | jq '
+        unzip -p "$(grep -l nd-lyrics ${pluginsFolder}/*.ndp | head -1)" manifest.json | jq '
           .config.schema as $s
           | def defaults: to_entries | map(select(.value | has("default")) | {key, value: .value.default}) | from_entries;
           ($s.properties.providersList.items.properties | defaults | del(.provider)) as $provider
@@ -52,6 +40,9 @@ in
 {
   services.navidrome = {
     enable = true;
+    # Lyrics from LRCLIB and other sources, for clients that ask; the web UI
+    # doesn't show plugin lyrics yet.
+    withPlugins = p: [ p.lyrics-plugin ];
     settings = {
       # All interfaces, so containers reach it for their tailnet. The firewall
       # below keeps the port closed on the public interface, where Caddy serves it.
@@ -60,7 +51,6 @@ in
       # Deleted files linger forever otherwise. Not "always": an incremental
       # scan of an unmounted library would purge everything.
       Scanner.PurgeMissing = "full";
-      Plugins.Folder = "${plugins}";
       # Lyrics files and embedded lyrics first; the plugin only fills the gaps.
       LyricsPriority = ".lrc,.txt,embedded,nd-lyrics";
     };
@@ -132,8 +122,8 @@ in
     after = [ "navidrome.service" ];
     requires = [ "navidrome.service" ];
     wantedBy = [ "multi-user.target" ];
-    path = [ config.services.navidrome.package ];
-    environment.ND_PLUGINS_FOLDER = "${plugins}";
+    path = [ config.services.navidrome.finalPackage ];
+    environment.ND_PLUGINS_FOLDER = pluginsFolder;
     serviceConfig = {
       Type = "oneshot";
       User = "navidrome";
