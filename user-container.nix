@@ -22,7 +22,10 @@ let
 in
 {
   # Otherwise it would bind the empty directories beneath unmounted datasets.
-  systemd.services."container@${name}".unitConfig.RequiresMountsFor = lib.attrNames bindMounts;
+  # The host side of each mount: hostPath when it differs from the mount point.
+  systemd.services."container@${name}".unitConfig.RequiresMountsFor = lib.mapAttrsToList (
+    mountPoint: m: m.hostPath or mountPoint
+  ) bindMounts;
 
   containers.${name} = {
     autoStart = true;

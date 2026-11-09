@@ -85,6 +85,11 @@ in
           mountpoint = "/storage/downloads";
           options.mountpoint = "legacy";
         };
+        roms = {
+          type = "zfs_fs";
+          mountpoint = "/storage/roms";
+          options.mountpoint = "legacy";
+        };
       };
     };
   };
