@@ -45,6 +45,7 @@
           ./disko.nix
           ./lidarr.nix
           ./navidrome.nix
+          ./roms.nix
           (import ./user-container.nix {
             name = "paal";
             subnet = 2;
@@ -53,7 +54,13 @@
               "/storage/music".isReadOnly = false;
               "/storage/downloads" = { };
               "/var/lib/slskd/downloads" = { };
+              # RomM's fixed library path.
+              "/var/lib/romm/library" = {
+                hostPath = "/storage/roms";
+                isReadOnly = false;
+              };
             };
+            modules = [ ./container-romm.nix ];
           })
           ./peira.nix
           ./slskd.nix
