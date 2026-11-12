@@ -66,7 +66,7 @@
           ./slskd.nix
           ./transmission.nix
           ./wireguard.nix
-          ./users/soft.nix
+          (import ./users/soft.nix etrobert-setup)
           ./users/softer.nix
           ./users/paal.nix
         ];
