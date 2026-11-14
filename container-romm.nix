@@ -12,6 +12,9 @@
     extraEnvironment = {
       LAUNCHBOX_API_ENABLED = "true";
       HASHEOUS_API_ENABLED = "true";
+      # LaunchBox's database lives only in RomM's cache, so refill it on a
+      # schedule; otherwise it is empty after a restart and matches nothing.
+      ENABLE_SCHEDULED_UPDATE_LAUNCHBOX_METADATA = "true";
     };
   };
 
