@@ -60,7 +60,10 @@
                 isReadOnly = false;
               };
             };
-            modules = [ ./container-romm.nix ];
+            modules = [
+              ./container-romm.nix
+              ./romm-oidc-paal.nix
+            ];
           })
           ./peira.nix
           ./slskd.nix
