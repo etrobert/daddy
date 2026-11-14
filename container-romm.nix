@@ -7,6 +7,12 @@
     enable = true;
     # The container's tailnet name; nginx also answers its tailnet IP.
     nginx.virtualHost = config.networking.hostName;
+    # Metadata and cover art from sources that need no API key. ScreenScraper
+    # also needs developer credentials, which this build doesn't ship.
+    extraEnvironment = {
+      LAUNCHBOX_API_ENABLED = "true";
+      HASHEOUS_API_ENABLED = "true";
+    };
   };
 
   # /storage/roms belongs to the users group, with setgid so new files stay in it.
